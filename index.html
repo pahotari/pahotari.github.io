@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaaliaikainen tunnistus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Reaaliaikainen tunnistus</h1>
+    <div id="buttons-container">
+        <button id="start-stop-button">Käynnistä kamera</button>
+        <button id="toggle-button">Tunnista</button>
+        <button id="settings-toggle-button">Näytä Asetukset</button>
+    </div>
+    <div id="settings-container" class="settings-hidden">
+        <label for="classes">Tunnistettavat luokat (pilkulla erotettu lista tai "kaikki"):</label>
+        <input type="text" id="classes" value="person, car, dog">
+        <br>
+        <label for="confidence">Luottamusväli (0.0 - 1.0):</label>
+        <input type="number" id="confidence" value="0.5" step="0.01">
+        <br>
+        <label for="max-detections">Maksimi etsittävät kohteet:</label>
+        <input type="number" id="max-detections" value="10">
+        <br>
+        <label for="show-bbox">Näytä bounding box -tiedot:</label>
+        <input type="checkbox" id="show-bbox" checked>
+        <br>
+        <label for="toggle-video">Näytä videokuva:</label>
+        <input type="checkbox" id="toggle-video" checked>
+    </div>
+    <div id="camera-container">
+        <video id="camera"></video>
+    </div>
+    <canvas id="output-canvas"></canvas>
+    <div id="object-info"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script src="script.js"></script>
+</body>
+</html>
