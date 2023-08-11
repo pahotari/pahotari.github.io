@@ -140,8 +140,9 @@ function stopStreaming() {
 }
 
 function startCamera() {
+	const constraints = { video: { facingMode: currentFacingMode } };
 	navigator.mediaDevices
-		.getUserMedia({ video: true })
+		.getUserMedia(constraints)
 		.then((stream) => {
 			videoElement.srcObject = stream;
 			videoElement.onloadedmetadata = () => {
@@ -156,6 +157,7 @@ function startCamera() {
 			console.error('Kameran käyttö epäonnistui:', error);
 		});
 }
+
 
 function updateTargetClasses() {
 	const classesInput = document.getElementById('classes');
