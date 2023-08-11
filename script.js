@@ -49,9 +49,16 @@ async function main() {
 
 async function toggleCameraFacingMode() {
     const constraints = { video: { facingMode: currentFacingMode === 'user' ? 'environment' : 'user' } };
-    stopCamera(); // Lopetetaan nykyinen kamera
-    startCamera(constraints); // Käynnistetään valittu kamera
-    currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user'; // Päivitetään aktiivinen kameratila
+    stopCamera();
+    startCamera(constraints);
+    currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+    updateCameraStatusText();
+}
+
+function updateCameraStatusText() {
+    const statusText = currentFacingMode === 'user' ? 'Etukamera' : 'Takakamera';
+	const switchCameraButton = document.getElementById('switch-camera-button');
+    switchCameraButton.textContent = statusText;
 }
 
 function toggleSettings() {
