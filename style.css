@@ -14,6 +14,9 @@ body {
 	margin: 10px;
 	margin-top: 10px;
 }
+#camera {
+	width: 100%;
+}
 #output-canvas {
 	display: none;
 	margin: 10px;
@@ -41,6 +44,19 @@ body {
 	width: 100%;
 	padding: 10px;
 	background-color: #28a745;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#switch-camera-button {
+	margin-top: 10px;
+	max-width: 100px;
+	height: 50px;
+	width: 100%;
+	padding: 10px;
+	background-color: #2885a7;
 	color: white;
 	border: none;
 	border-radius: 5px;
@@ -92,12 +108,12 @@ body {
 }
 
 @media (max-width: 600px) {
-    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #settings-toggle-button, #object-info {
+    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button, #object-info {
         max-width: 100%;
         margin: 5px;
     }
 
-    #toggle-button, #start-stop-button, #settings-toggle-button {
+    #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button {
         font-size: 14px;
         height: 40px;
     }
@@ -109,12 +125,12 @@ body {
 }
 
 @media (max-width: 400px) {
-    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #object-info {
+    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #object-info {
         max-width: 100%;
         margin: 5px;
     }
 
-    #toggle-button, #start-stop-button, #settings-toggle-button {
+    #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button {
         font-size: 14px;
         height: 40px;
     }

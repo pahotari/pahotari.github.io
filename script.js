@@ -9,6 +9,7 @@ let confidence;
 let maxDetections;
 let showBoundingBoxInfo = true;
 let showVideo = true;
+let currentFacingMode = 'environment'; // Alustetaan etukamera (environment) aktiiviseksi
 
 async function main() {
     const settingsToggleButton = document.getElementById('settings-toggle-button');
@@ -23,6 +24,9 @@ async function main() {
 
     toggleButton.addEventListener('click', toggleStreaming);
     startButton.addEventListener('click', toggleCamera);
+
+	const switchCameraButton = document.getElementById('switch-camera-button');
+	switchCameraButton.addEventListener('click', toggleCameraFacingMode);
 
     const classesInput = document.getElementById('classes');
     const confidenceInput = document.getElementById('confidence');
@@ -41,6 +45,13 @@ async function main() {
     updateMaxDetections();
     updateShowBoundingBoxInfo();
     updateShowVideo();
+}
+
+async function toggleCameraFacingMode() {
+    const constraints = { video: { facingMode: currentFacingMode === 'user' ? 'environment' : 'user' } };
+    await stopCamera(); // Lopetetaan nykyinen kamera
+    startCamera(constraints); // Käynnistetään valittu kamera
+    currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user'; // Päivitetään aktiivinen kameratila
 }
 
 function toggleSettings() {
