@@ -39,7 +39,8 @@ async function main() {
     maxDetectionsInput.addEventListener('change', updateMaxDetections);
     showBboxCheckbox.addEventListener('change', updateShowBoundingBoxInfo);
     toggleVideoCheckbox.addEventListener('change', updateShowVideo);
-
+	
+	updateCameraStatusText();
     updateTargetClasses();
     updateConfidence();
     updateMaxDetections();
