@@ -1,2 +1,2 @@
 # pahotari.github.io
-# test
+# This is for testing object detection in web browser
