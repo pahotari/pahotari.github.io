@@ -49,7 +49,7 @@ async function main() {
 
 async function toggleCameraFacingMode() {
     const constraints = { video: { facingMode: currentFacingMode === 'user' ? 'environment' : 'user' } };
-    await stopCamera(); // Lopetetaan nykyinen kamera
+    stopCamera(); // Lopetetaan nykyinen kamera
     startCamera(constraints); // Käynnistetään valittu kamera
     currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user'; // Päivitetään aktiivinen kameratila
 }
