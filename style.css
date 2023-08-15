@@ -207,8 +207,15 @@ input:checked + .toggle-slider:before {
 }
 
 #close-settings {
-    font-size: 24px;
+    font-size: 18px;
     margin-right: 10px;
+    cursor: pointer;
+}
+.settings-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
     cursor: pointer;
 }
 
