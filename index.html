@@ -3,38 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reaaliaikainen tunnistus</title>
+    <title>Kohteen tunnistus</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <h1>Reaaliaikainen tunnistus</h1>
-    <div id="buttons-container">
-        <button id="start-stop-button">Käynnistä kamera</button>
-        <button id="switch-camera-button">Etukamera</button>
-        <button id="toggle-button">Tunnista</button>
-        <button id="settings-toggle-button">Näytä Asetukset</button>
-    </div>
+    <h2>Kohteen tunnistus</h2>
     <div id="settings-container" class="settings-hidden">
-        <label for="classes">Tunnistettavat luokat (pilkulla erotettu lista tai "kaikki"):</label>
-        <input type="text" id="classes" value="person, car, dog">
-        <br>
-        <label for="confidence">Luottamusväli (0.0 - 1.0):</label>
-        <input type="number" id="confidence" value="0.5" step="0.01">
-        <br>
-        <label for="max-detections">Maksimi etsittävät kohteet:</label>
-        <input type="number" id="max-detections" value="10">
-        <br>
-        <label for="show-bbox">Näytä bounding box -tiedot:</label>
-        <input type="checkbox" id="show-bbox" checked>
-        <br>
-        <label for="toggle-video">Näytä videokuva:</label>
-        <input type="checkbox" id="toggle-video" checked>
+        <div class="settings-header">
+            <i class="fas fa-chevron-left icon" id="close-settings"></i>
+            <div class="settings-title">Asetukset</div>
+        </div>
+        <div class="setting">
+            <div class="setting-label">
+                <label for="classes">Luokat tai "kaikki"</label>
+            </div>
+            <div class="setting-input">
+                <input type="text" id="classes" value="person, car, dog">
+            </div>
+        </div>
+        <div class="setting">
+            <div class="setting-label">
+                <label for="confidence">Luottamusväli (0.0 - 1.0)</label>
+            </div>
+            <div class="setting-input">
+                <input type="range" id="confidence" value="0.5" step="0.01" min="0" max="1">
+                <span id="confidence-value">0.5</span>
+            </div>
+        </div>
+        <div class="setting">
+            <div class="setting-label">
+                <label for="max-detections">Maksimi objektit</label>
+            </div>
+            <div class="setting-input">
+                <input type="range" id="max-detections" value="10" step="1" min="1" max="100">
+                <span id="max-detections-value">10</span>
+            </div>
+        </div>
+        <div class="setting">
+            <div class="setting-label">
+                <label for="show-bbox" class="toggle-switch">Object info</label>
+            </div>
+            <div class="setting-input">
+                <input type="checkbox" id="show-bbox" class="toggle-switch" checked>
+            </div>
+        </div>
+        <div class="setting">
+            <div class="setting-label">
+                <label for="toggle-video" class="toggle-switch">Videokuva</label>
+            </div>
+            <div class="setting-input">
+                <input type="checkbox" id="toggle-video" class="toggle-switch" checked>
+            </div>
+        </div>
     </div>
     <div id="camera-container">
         <video id="camera"></video>
     </div>
     <canvas id="output-canvas"></canvas>
-    <div id="object-info"></div>
+    <div id="object-info" class="object-info-hidden"></div>
+    <div id="buttons-container">
+        <button id="start-stop-button">Käynnistä kamera</button>
+        <button id="switch-camera-button">Vaihda kamera</button>
+        <button id="toggle-button">Tunnista</button>
+        <button id="settings-toggle-button">Asetukset</button>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>

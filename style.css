@@ -1,3 +1,4 @@
+/* Resetoi perusmargin ja -padding */
 body {
     margin: 0;
     padding: 0;
@@ -8,106 +9,198 @@ body {
     min-height: 100vh;
     background-color: #f5f5f5;
 }
+
+/* Yhteiset asetukset kuvakehyksille ja videolle */
 #camera-container {
-	width: 100%;
-	max-width: 600px;
-	margin: 10px;
-	margin-top: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin: 10px;
+    margin-top: 10px;
 }
+
 #camera {
-	width: 100%;
+    width: 100%;
 }
+
 #output-canvas {
-	display: none;
-	margin: 10px;
-	width: 100%;
-	max-width: 600px;
-	margin-top: 10px;
-}
-#toggle-button {
-	margin-top: 10px;
-	max-width: 100px;
-	height: 50px;
-	width: 100%;
-	margin: 10px;
-	padding: 10px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-#start-stop-button {
-	margin-top: 10px;
-	max-width: 100px;
-	height: 50px;
-	width: 100%;
-	padding: 10px;
-	background-color: #28a745;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
+    display: none;
+    margin: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 10px;
+    z-index: -1;
 }
 
-#switch-camera-button {
-	margin-top: 10px;
-	max-width: 100px;
-	height: 50px;
-	width: 100%;
-	padding: 10px;
-	background-color: #2885a7;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
+/* Yhteiset asetukset nappuloille */
+#toggle-button,
+#start-stop-button,
+#switch-camera-button,
 #settings-toggle-button {
-	margin-top: 10px;
-	max-width: 100px;
-	height: 50px;
-	width: 100%;
-	padding: 10px;
-	background-color: #ffc107;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px; /* Lisää 10px väli oikealle puolelle */
+    max-width: 100px;
+    height: 50px;
+    width: calc(25% - 10px); /* Aseta leveys niin, että väli on 10px */
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
+/* Toggle-tyylinen valitsin */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 25px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: #2b2d2d;
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+}
+
+/* Object info -elementti */
 #object-info {
-	width: 100%;
-	max-width: 600px;
-	margin: 10px;
-	padding: 10px;
-	background-color: white;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-	font-size: 10px
+    width: 100%;
+    max-width: 400px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    font-size: 10px;
+    margin-bottom: 10px;
+    display: none;
+    overflow: auto; /* Lisää scrollaus, jos sisältö ylivuotaa */
+    max-height: 50px; /* Määritä maksimikorkeus */
+    white-space: pre-line; /* Näytä rivin vaihdot oikein */
+	position: relative;
+    z-index: 999; /* Aseta korkea z-indeksi */
+	margin-top: -20px; /* Siirrä elementtiä 50px ylöspäin */
 }
-/* Uudet tyylit mobiiliystävällisyyteen */
+
+/* Yhteiset mobiiliystävälliset asetukset */
 #buttons-container {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	max-width: 600px;
-	padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
 }
+
 #settings-container {
-	width: 100%;
-	max-width: 600px;
-	margin: 10px;
-	padding: 10px;
-	background-color: white;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .settings-hidden {
-	display: none;
+    display: none;
+}
+.setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background-color: #f5f5f5; /* Harmaa tausta */
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    padding: 10px; /* Lisätty sisäpolsteri */
+    height: 60px; /* Suurempi korkeus */
 }
 
+.setting-label {
+    flex: 1;
+    padding-right: 10px;
+    text-align: left;
+	font-weight: bold;
+}
+
+.setting-input {
+    flex: 2;
+    text-align: right;
+}
+
+.setting-input input[type="text"],
+.setting-input input[type="range"],
+.setting-input input[type="checkbox"] {
+    border: none;
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    padding: 5px 10px; /* Lisätty sisäpolsteri */
+    height: 30px; /* Suurempi korkeus */
+}
+
+.settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-bottom: 10px solid #ffffff;
+}
+
+.settings-title {
+    font-weight: regular;
+    margin-left: 10px;
+}
+
+#close-settings {
+    font-size: 24px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.settings-hidden #buttons-container,
+.settings-hidden #object-info,
+.settings-hidden #camera-container,
+.settings-hidden #output-canvas {
+    display: none;
+}
+
+/* Mobiilinäkymät */
 @media (max-width: 600px) {
     #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button, #object-info {
         max-width: 100%;
@@ -126,7 +219,7 @@ body {
 }
 
 @media (max-width: 400px) {
-    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #object-info {
+    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button, #object-info {
         max-width: 100%;
         margin: 5px;
     }

@@ -29,8 +29,13 @@ async function main() {
 	switchCameraButton.addEventListener('click', toggleCameraFacingMode);
 
     const classesInput = document.getElementById('classes');
-    const confidenceInput = document.getElementById('confidence');
-    const maxDetectionsInput = document.getElementById('max-detections');
+    
+	const confidenceInput = document.getElementById("confidence");
+	const confidenceValue = document.getElementById("confidence-value");
+	
+	const maxDetectionsInput = document.getElementById("max-detections");
+	const maxDetectionsValue = document.getElementById("max-detections-value");
+
     const showBboxCheckbox = document.getElementById('show-bbox');
     const toggleVideoCheckbox = document.getElementById('toggle-video');
 
@@ -40,6 +45,14 @@ async function main() {
     showBboxCheckbox.addEventListener('change', updateShowBoundingBoxInfo);
     toggleVideoCheckbox.addEventListener('change', updateShowVideo);
 	
+	confidenceInput.addEventListener("input", function() {
+		confidenceValue.textContent = confidenceInput.value;
+	});
+	
+	maxDetectionsInput.addEventListener("input", function() {
+		maxDetectionsValue.textContent = maxDetectionsInput.value;
+	});
+
 	updateCameraStatusText();
     updateTargetClasses();
     updateConfidence();
@@ -54,26 +67,62 @@ async function toggleCameraFacingMode() {
     startCamera(constraints);
     currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
     updateCameraStatusText();
+	stopStreaming();
+	updateToggleButton();
 }
 
 function updateCameraStatusText() {
-    const statusText = currentFacingMode === 'user' ? 'Etukamera' : 'Takakamera';
+    const statusText = currentFacingMode === 'user' ? 'Vaihda kamera' : 'Vaihda kamera';
 	const switchCameraButton = document.getElementById('switch-camera-button');
     switchCameraButton.textContent = statusText;
 }
 
-function toggleSettings() {
-	const settingsContainer = document.getElementById('settings-container');
-	const settingsToggleButton = document.getElementById('settings-toggle-button');
+function updateUIVisibility() {
+    const settingsContainer = document.getElementById('settings-container');
+    const objectInfo = document.getElementById('object-info');
+    const canvas = document.getElementById('output-canvas');
+    const cameraContainer = document.getElementById('camera-container');
+    const buttonsContainer = document.getElementById('buttons-container');
 
-	if (settingsContainer.classList.contains('settings-hidden')) {
-		settingsContainer.classList.remove('settings-hidden');
-		settingsToggleButton.textContent = 'Piilota Asetukset';
-	} else {
-		settingsContainer.classList.add('settings-hidden');
-		settingsToggleButton.textContent = 'Näytä Asetukset';
-	}
+    if (settingsContainer.classList.contains('settings-hidden')) {
+        // Asetukset-ikkuna piilotettu
+        objectInfo.style.display = showBoundingBoxInfo && streaming ? 'block' : 'none';
+        canvas.style.display = streaming ? 'block' : 'none';
+		if (cameraStarted && !streaming) {
+          cameraContainer.style.display = 'block';
+		}
+        buttonsContainer.style.display = 'flex';
+    } else {
+        // Asetukset-ikkuna näytössä
+        objectInfo.style.display = 'none';
+        canvas.style.display = 'none';
+        cameraContainer.style.display = 'none';
+        buttonsContainer.style.display = 'none';
+    }
 }
+
+function toggleSettings() {
+    const settingsContainer = document.getElementById('settings-container');
+    const settingsToggleButton = document.getElementById('settings-toggle-button');
+
+    if (settingsContainer.classList.contains('settings-hidden')) {
+        settingsContainer.classList.remove('settings-hidden');
+    } else {
+        settingsContainer.classList.add('settings-hidden');
+    }
+    updateUIVisibility();
+}
+
+
+const closeSettingsButton = document.getElementById('close-settings');
+closeSettingsButton.addEventListener('click', closeSettings);
+
+function closeSettings() {
+   // const settingsContainer = document.getElementById('settings-container');
+   // settingsContainer.classList.add('settings-hidden');
+   toggleSettings();
+}
+
 
 function toggleCamera() {
 	if (!cameraStarted) {
@@ -113,20 +162,30 @@ function toggleStreaming() {
 function updateStartStopButtonText() {
 	const startButton = document.getElementById('start-stop-button');
 	startButton.textContent = cameraStarted ? 'Sulje kamera' : 'Käynnistä kamera';
-	startButton.style.backgroundColor = cameraStarted ? '#dc3545' : '#28a745'; // Punainen kun kamera on päällä, vihreä kun ei ole
+	startButton.style.backgroundColor = cameraStarted ? '#dc3545' : 'gray'; // Punainen kun kamera on päällä, vihreä kun ei ole
 }
 
 function updateToggleButton() {
 	const toggleButton = document.getElementById('toggle-button');
 	toggleButton.textContent = streaming ? 'Lopeta tunnistus' : 'Tunnista';
-	toggleButton.style.backgroundColor = streaming ? '#dc3545' : '#007bff'; // Punainen kun tunnistus on päällä, sininen kun ei ole
+	toggleButton.style.backgroundColor = streaming ? '#dc3545' : 'gray'; // Punainen kun tunnistus on päällä, sininen kun ei ole
 }
 
 function startStreaming() {
 	streaming = true;
 	document.getElementById('camera-container').style.display = 'none';
 	document.getElementById('output-canvas').style.display = 'block';
-	document.getElementById('object-info').style.display = 'block';
+
+	const objectInfo = document.getElementById('object-info');
+
+	if (showBoundingBoxInfo) {
+	  	objectInfo.classList.add('object-info-hidden');		
+	  	document.getElementById('object-info').style.display = 'block';
+	}
+	else {
+		objectInfo.classList.remove('object-info-hidden');
+		document.getElementById('object-info').style.display = 'none';
+	}
 	detectObjects();
 }
 
@@ -190,6 +249,7 @@ function updateShowVideo() {
 	}
 }
 
+
 async function detectObjects() {
 	if (!streaming) {
 		return;
@@ -237,5 +297,7 @@ async function detectObjects() {
 
 	animationFrameId = requestAnimationFrame(detectObjects);
 }
+
+
 
 main();
