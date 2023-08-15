@@ -124,8 +124,8 @@ closeSettingsButton.addEventListener('click', closeSettings);
 function closeSettings() {
    // const settingsContainer = document.getElementById('settings-container');
    // settingsContainer.classList.add('settings-hidden');
+   saveSettings();  
    toggleSettings();
-   saveSettings();
 }
 
 
@@ -313,26 +313,36 @@ function saveSettings() {
     const showBboxInput = document.getElementById("show-bbox");
     const toggleVideoInput = document.getElementById("toggle-video");
 
-    localStorage.setItem("classes", classesInput.value);
-    localStorage.setItem("confidence", confidenceInput.value);
-    localStorage.setItem("maxDetections", maxDetectionsInput.value);
-    localStorage.setItem("showBbox", showBboxInput.checked);
-    localStorage.setItem("toggleVideo", toggleVideoInput.checked);
+    const settings = {
+        classes: classesInput.value,
+        confidence: confidenceInput.value,
+        maxDetections: maxDetectionsInput.value,
+        showBbox: showBboxInput.checked,
+        toggleVideo: toggleVideoInput.checked,
+    };
+
+    localStorage.setItem("settings", JSON.stringify(settings));
 }
 
 // Ladataan tallennetut asetustiedot
 function loadSettings() {
-    const classesInput = document.getElementById("classes");
-    const confidenceInput = document.getElementById("confidence");
-    const maxDetectionsInput = document.getElementById("max-detections");
-    const showBboxInput = document.getElementById("show-bbox");
-    const toggleVideoInput = document.getElementById("toggle-video");
 
-    classesInput.value = localStorage.getItem("classes") || "person, car, dog";
-    confidenceInput.value = localStorage.getItem("confidence") || 0.5;
-    maxDetectionsInput.value = localStorage.getItem("maxDetections") || 10;
-    showBboxInput.checked = JSON.parse(localStorage.getItem("showBbox")) || true;
-    toggleVideoInput.checked = JSON.parse(localStorage.getItem("toggleVideo")) || true;
+	const settings = JSON.parse(localStorage.getItem("settings"));
+
+    if (settings) {
+		const classesInput = document.getElementById("classes");
+		const confidenceInput = document.getElementById("confidence");
+		const maxDetectionsInput = document.getElementById("max-detections");
+		const showBboxInput = document.getElementById("show-bbox");
+		const toggleVideoInput = document.getElementById("toggle-video");
+
+		classesInput.value = settings.classes;
+		confidenceInput.value = settings.confidence; 
+		maxDetectionsInput.value = settings.maxDetections;
+		showBboxInput.checked = settings.showBbox;
+		toggleVideoInput.checked = settings.toggleVideo;
+
+	}
 }
 
 main();
