@@ -12,7 +12,7 @@ let showVideo = true;
 let currentFacingMode = 'environment'; // Alustetaan etukamera (environment) aktiiviseksi
 
 async function main() {
-	loadSettings();
+
     const settingsToggleButton = document.getElementById('settings-toggle-button');
     settingsToggleButton.addEventListener('click', toggleSettings);
 
@@ -60,6 +60,9 @@ async function main() {
     updateMaxDetections();
     updateShowBoundingBoxInfo();
     updateShowVideo();
+
+	// Kutsu loadSettings funktiota lataustapahtumassa
+	window.addEventListener("load", loadSettings);
 }
 
 async function toggleCameraFacingMode() {
