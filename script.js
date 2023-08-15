@@ -62,7 +62,8 @@ async function main() {
     updateShowVideo();
 
 	// Kutsu loadSettings funktiota lataustapahtumassa
-	window.addEventListener("load", loadSettings);
+	//window.addEventListener("load", loadSettings);
+	loadSettings();
 }
 
 async function toggleCameraFacingMode() {
@@ -322,13 +323,16 @@ function saveSettings() {
     };
 
     localStorage.setItem("settings", JSON.stringify(settings));
+	//console.log(settings)
 }
 
 // Ladataan tallennetut asetustiedot
 function loadSettings() {
 
+	//console.log("get settings")
 	const settings = JSON.parse(localStorage.getItem("settings"));
 
+	//console.log(settings)
     if (settings) {
 		const classesInput = document.getElementById("classes");
 		const confidenceInput = document.getElementById("confidence");
