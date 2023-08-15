@@ -115,17 +115,36 @@ input:checked + .toggle-slider:before {
 	margin-top: -20px; /* Siirrä elementtiä 50px ylöspäin */
 }
 
-/* Yhteiset mobiiliystävälliset asetukset */
 #buttons-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     max-width: 400px;
     padding: 10px;
     position: fixed;
     bottom: 0;
     background-color: white;
+    flex-wrap: wrap; /* Lisätty flex-wrap-ominaisuus */
 }
+
+#toggle-button,
+#start-stop-button,
+#switch-camera-button,
+#settings-toggle-button {
+    margin: 5px; /* Pienennetty marginaaleja */
+    height: 50px;
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-grow: 1; /* Joustava leveys */
+    max-width: calc(50% - 10px); /* Enintään kahdessa sarakkeessa, väli 10px */
+    font-size: 1em; /* Fonttikoko suhteessa elementin koko */
+}
+
 
 #settings-container {
     width: 100%;
@@ -202,35 +221,24 @@ input:checked + .toggle-slider:before {
 
 /* Mobiilinäkymät */
 @media (max-width: 600px) {
-    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button, #object-info {
-        max-width: 100%;
-        margin: 5px;
-    }
-
-    #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button {
-        font-size: 14px;
-        height: 40px;
-    }
-
     #buttons-container {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row; /* Horisontaalinen suunta */
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        bottom: 0;
+        left: 0;
+        height: 70px; /* Määritä korkeus mobiilinäkymässä */
+        background-color: white;
+    }
+
+    #toggle-button,
+    #start-stop-button,
+    #switch-camera-button,
+    #settings-toggle-button {
+        max-width: none; /* Ei rajoitettua maksimileveyttä */
+        font-size: 0.9em; /* Pienempi fonttikoko mobiilinäkymässä */
     }
 }
 
-@media (max-width: 400px) {
-    #camera-container, #output-canvas, #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button, #object-info {
-        max-width: 100%;
-        margin: 5px;
-    }
 
-    #toggle-button, #start-stop-button, #switch-camera-button, #settings-toggle-button {
-        font-size: 14px;
-        height: 40px;
-    }
-
-    #buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
-}
