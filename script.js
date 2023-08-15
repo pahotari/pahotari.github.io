@@ -12,6 +12,7 @@ let showVideo = true;
 let currentFacingMode = 'environment'; // Alustetaan etukamera (environment) aktiiviseksi
 
 async function main() {
+	loadSettings();
     const settingsToggleButton = document.getElementById('settings-toggle-button');
     settingsToggleButton.addEventListener('click', toggleSettings);
 
@@ -121,6 +122,7 @@ function closeSettings() {
    // const settingsContainer = document.getElementById('settings-container');
    // settingsContainer.classList.add('settings-hidden');
    toggleSettings();
+   saveSettings();
 }
 
 
@@ -299,5 +301,35 @@ async function detectObjects() {
 }
 
 
+
+// Tallennetaan asetustiedot
+function saveSettings() {
+    const classesInput = document.getElementById("classes");
+    const confidenceInput = document.getElementById("confidence");
+    const maxDetectionsInput = document.getElementById("max-detections");
+    const showBboxInput = document.getElementById("show-bbox");
+    const toggleVideoInput = document.getElementById("toggle-video");
+
+    localStorage.setItem("classes", classesInput.value);
+    localStorage.setItem("confidence", confidenceInput.value);
+    localStorage.setItem("maxDetections", maxDetectionsInput.value);
+    localStorage.setItem("showBbox", showBboxInput.checked);
+    localStorage.setItem("toggleVideo", toggleVideoInput.checked);
+}
+
+// Ladataan tallennetut asetustiedot
+function loadSettings() {
+    const classesInput = document.getElementById("classes");
+    const confidenceInput = document.getElementById("confidence");
+    const maxDetectionsInput = document.getElementById("max-detections");
+    const showBboxInput = document.getElementById("show-bbox");
+    const toggleVideoInput = document.getElementById("toggle-video");
+
+    classesInput.value = localStorage.getItem("classes") || "person, car, dog";
+    confidenceInput.value = localStorage.getItem("confidence") || 0.5;
+    maxDetectionsInput.value = localStorage.getItem("maxDetections") || 10;
+    showBboxInput.checked = JSON.parse(localStorage.getItem("showBbox")) || true;
+    toggleVideoInput.checked = JSON.parse(localStorage.getItem("toggleVideo")) || true;
+}
 
 main();
