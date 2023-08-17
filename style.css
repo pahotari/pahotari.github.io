@@ -12,7 +12,9 @@ body {
 
 /* Yhteiset asetukset kuvakehyksille ja videolle */
 #camera-container {
-    width: 100%;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
     max-width: 600px;
     margin: 10px;
     margin-top: 10px;
@@ -25,7 +27,9 @@ body {
 #output-canvas {
     display: none;
     margin: 10px;
-    width: 100%;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
     max-width: 600px;
     margin-top: 10px;
     z-index: -1;
@@ -97,7 +101,9 @@ input:checked + .toggle-slider:before {
 
 /* Object info -elementti */
 #object-info {
-    width: 100%;
+    width: calc(100% - 20px); /* Käytä näytön leveydestä 10 pikseliä marginaaleihin */
+    margin-left: 10px; /* Vasen marginaali */
+    margin-right: 10px; /* Oikea marginaali */
     max-width: 600px;
     margin: 10px;
     padding: 10px;

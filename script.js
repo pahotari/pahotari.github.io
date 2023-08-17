@@ -291,7 +291,7 @@ async function detectObjects() {
 				const y = Math.round(prediction.bbox[1]);
 				const width = Math.round(prediction.bbox[2]);
 				const height = Math.round(prediction.bbox[3]);
-				const infoText = `${prediction.class} - ID: ${index}, Luottamus: ${Math.round(prediction.score * 100)}%, Bounding Box: (${x}, ${y}), (${x + width}, ${y + height})`;
+				const infoText = `ID: ${index}, ${prediction.class}, Luottamus: ${Math.round(prediction.score * 100)}%, Bounding Box: (${x}, ${y}), (${x + width}, ${y + height})`;
 				const infoParagraph = document.createElement('p');
 				infoParagraph.textContent = infoText;
 				objectInfoDiv.appendChild(infoParagraph);
@@ -349,4 +349,28 @@ function loadSettings() {
 	}
 }
 
+
+document.getElementById("send-button").addEventListener("click", async function() {
+    const functionUrl = "https://your-netlify-site-name.netlify.app/.netlify/functions/influxdb-proxy"; // Replace with your Netlify function endpoint
+    
+    const data = `
+        ObjectCount,Hgroup=test,HostName=test Hmac=test,DeviceID=test,Objectdetect=person,Place=test,Room=test,Type=test HostIP=test,Imagewidth=1920,Imageheight=1088 box_origin_x=200,box_origin_y=100,box_width=100,box_height=100,ObjectID=1,score=10,category_name=Person,CValue=1
+        ObjectCount,Hgroup=test,HostName=test Hmac=test,DeviceID=test,Objectdetect=person,Place=test,Room=test,Type=test HostIP=test,Imagewidth=1920,Imageheight=1088 box_origin_x=300,box_origin_y=200,box_width=200,box_height=200,ObjectID=2,score=11,category_name=Person,CValue=1
+    `;
+
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain"
+        },
+        body: data
+    };
+
+    try {
+        const response = await fetch(functionUrl, requestOptions);
+        console.log("Response:", response);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
 main();
