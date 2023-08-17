@@ -349,7 +349,7 @@ function loadSettings() {
 	}
 }
 
-
+/*
 document.getElementById("send-button").addEventListener("click", async function() {
     const functionUrl = "https://super-beignet-e05343.netlify.app/.netlify/functions/influxdb-proxy"; // Replace with your Netlify function endpoint
     
@@ -373,4 +373,6 @@ document.getElementById("send-button").addEventListener("click", async function(
         console.error("Error:", error);
     }
 });
+*/
+
 main();
