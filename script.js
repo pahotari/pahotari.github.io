@@ -351,7 +351,7 @@ function loadSettings() {
 
 
 document.getElementById("send-button").addEventListener("click", async function() {
-    const functionUrl = "https://your-netlify-site-name.netlify.app/.netlify/functions/influxdb-proxy"; // Replace with your Netlify function endpoint
+    const functionUrl = "https://super-beignet-e05343.netlify.app/.netlify/functions/influxdb-proxy"; // Replace with your Netlify function endpoint
     
     const data = `
         ObjectCount,Hgroup=test,HostName=test Hmac=test,DeviceID=test,Objectdetect=person,Place=test,Room=test,Type=test HostIP=test,Imagewidth=1920,Imageheight=1088 box_origin_x=200,box_origin_y=100,box_width=100,box_height=100,ObjectID=1,score=10,category_name=Person,CValue=1
