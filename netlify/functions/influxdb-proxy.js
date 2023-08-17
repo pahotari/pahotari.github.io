@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 exports.handler = async function(event, context) {
     const token = "YSuHqMz2o57LX3IBvQqY3NM89_z9p15dQqKb9My-3cP_foL8V9_NLEcMX_zOjaJDaWhrmnGtoyK1fb2wLuWhGUQ==";
     const bucket = "iotbucket_cloud_stream";
@@ -8,9 +6,22 @@ exports.handler = async function(event, context) {
 
     const data = event.body;
 
+    const allowedOrigins = [
+        "http://localhost:8888", // Update with your local development server URL
+        "https://pahotari.github.io", // Update with your GitHub Pages URL
+    ];
+
+    const origin = event.headers.origin;
+
+    const headers = {
+        "Access-Control-Allow-Origin": allowedOrigins.includes(origin) ? origin : "",
+        "Access-Control-Allow-Headers": "Content-Type",
+    };
+
     const requestOptions = {
         method: "POST",
         headers: {
+            ...headers,
             "Content-Type": "text/plain",
             "Authorization": "Token " + token
         },
@@ -21,11 +32,13 @@ exports.handler = async function(event, context) {
         const response = await fetch(influxUrl, requestOptions);
         return {
             statusCode: response.status,
+            headers,
             body: JSON.stringify({ message: "Data sent successfully" })
         };
     } catch (error) {
         return {
             statusCode: 500,
+            headers,
             body: JSON.stringify({ error: "An error occurred" })
         };
     }
